@@ -751,26 +751,7 @@ private func convert(_ value: NFCNDEFTag, _ completionHandler: @escaping (TagPig
     )
   }
 
-  value.queryNDEFStatus { status, capacity, error in
-    if let error = error {
-      completionHandler(pigeon, nil)
-      return
-    }
-    pigeon.ndef = NdefPigeon(
-      status: convert(status),
-      capacity: Int64(capacity)
-    )
-    if status == .notSupported {
-      completionHandler(pigeon, nil)
-      return
-    }
-    value.readNDEF { message, error in
-      if let message = message {
-        pigeon.ndef?.cachedNdefMessage = convert(message)
-      }
-      completionHandler(pigeon, nil)
-    }
-  }
+  completionHandler(pigeon, nil)
 }
 
 private func convert(_ value: NdefMessagePigeon) -> NFCNDEFMessage {
