@@ -753,7 +753,7 @@ private func convert(_ value: NFCNDEFTag, _ completionHandler: @escaping (TagPig
 
   value.queryNDEFStatus { status, capacity, error in
     if let error = error {
-      completionHandler(nil, error)
+      completionHandler(pigeon, nil)
       return
     }
     pigeon.ndef = NdefPigeon(
@@ -765,10 +765,6 @@ private func convert(_ value: NFCNDEFTag, _ completionHandler: @escaping (TagPig
       return
     }
     value.readNDEF { message, error in
-      if let error = error {
-        completionHandler(nil, error)
-        return
-      }
       if let message = message {
         pigeon.ndef?.cachedNdefMessage = convert(message)
       }
